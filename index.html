@@ -1,2361 +1,776 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vedant Patel - Software Engineer Portfolio</title>
-    <meta name="description" content="Vedant Patel - Software Engineer with MS in Computer Science from University of Michigan. Specialized in full-stack development, machine learning, and scalable systems.">
-    
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <title>Vedant Patel // Software Engineer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
-        /* CSS Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            /* Shared variables */
+            --font-heading: 'Rajdhani', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Dark Mode (Default) */
+            --bg-main: #0a0a1a;
+            --text-primary: #e5e7eb;
+            --text-secondary: #9ca3af;
+            --glass-bg: rgba(10, 10, 26, 0.5);
+            --border-color: rgba(0, 246, 255, 0.2);
+            --shadow-color: rgba(0, 246, 255, 0.1);
+            --accent1: #00f6ff; /* Cyan */
+            --accent2: #ff00c1; /* Magenta */
+            --timeline-dot-border: var(--bg-main);
         }
 
-        :root {
-            /* Professional Color Palette - Recruiter Friendly */
-            --primary-color: #1a365d;
-            --primary-light: #2d5aa0;
-            --accent-color: #0ea5e9;
-            --accent-dark: #0284c7;
-            --secondary-color: #64748b;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-light: #64748b;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #e2e8f0;
-            --bg-gradient: linear-gradient(135deg, #1a365d 0%, #2d5aa0 50%, #0ea5e9 100%);
-            --border-light: #e2e8f0;
-            --border-medium: #cbd5e1;
-            --success-color: #059669;
-            --warning-color: #d97706;
-            --error-color: #dc2626;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        body.light-mode {
+            /* Light Mode */
+            --bg-main: #f0f2f5;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --accent1: #4338ca; /* Indigo */
+            --accent2: #059669; /* Emerald */
+            --timeline-dot-border: var(--bg-main);
+        }
+
+        html {
+             scroll-padding-top: 80px;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
             color: var(--text-primary);
-            background-color: var(--bg-primary);
-            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+            background-image: radial-gradient(circle at 1% 1%, rgba(0, 246, 255, 0.05), var(--bg-main) 70%);
         }
 
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
+        body.light-mode {
+             background-image: radial-gradient(circle at 1% 1%, rgba(67, 56, 202, 0.05), var(--bg-main) 70%);
         }
 
-        /* Navigation Styles */
-        .navbar {
-            position: fixed;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--text-primary);
+        }
+        
+        p {
+            color: var(--text-secondary);
+        }
+
+        .hero-gradient-text {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-gradient-bg {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        }
+        
+        .glass-ui {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 5px var(--accent1), 0 0 10px var(--accent1), 0 0 15px var(--accent1);
+        }
+        body.light-mode .neon-glow {
+             box-shadow: 0 5px 15px rgba(67, 56, 202, 0.3);
+        }
+        
+        .project-card:hover .project-image-container img {
+            transform: scale(1.05);
+        }
+        
+        .timeline-item::before {
+             content: '';
+             position: absolute;
+             left: -29px;
+             top: 4px;
+             width: 14px;
+             height: 14px;
+             border-radius: 50%;
+             background-color: var(--accent1);
+             border: 3px solid var(--timeline-dot-border);
+             box-shadow: 0 0 10px var(--accent1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        #hero-canvas {
+            position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-            z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: var(--shadow-md);
-            padding: 0.75rem 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: -0.025em;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--primary-color);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
             width: 100%;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .mobile-menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--text-primary);
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: var(--bg-gradient);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>') no-repeat;
-            background-size: cover;
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.75rem, 5vw, 4.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-            letter-spacing: -0.025em;
-        }
-
-        .hero-subtitle {
-            font-size: 1.375rem;
-            margin-bottom: 1rem;
-            opacity: 0.95;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .hero-description {
-            font-size: 1.125rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1.25rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1rem;
-            letter-spacing: 0.025em;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--primary-color);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            background: var(--bg-secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: var(--primary-color);
-            border-color: white;
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .profile-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            border-radius: 20px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            max-width: 400px;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .profile-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 6rem 0;
-        }
-
-        .section:nth-child(even) {
-            background: var(--bg-secondary);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            letter-spacing: -0.025em;
-        }
-
-        .section-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .stat-card {
-            background: var(--bg-primary);
-            padding: 2rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-light);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .about-text {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .education-item {
-            background: var(--bg-primary);
-            padding: 1.75rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--accent-color);
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.3s ease;
-        }
-
-        .education-item:hover {
-            transform: translateX(4px);
-        }
-
-        .education-degree {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .education-school {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .education-date {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-primary);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-light);
-            transition: transform 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .skill-category h3 {
-            font-size: 1.375rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-weight: 700;
-        }
-
-        .skill-category i {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.875rem;
-        }
-
-        .skill-tag {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            padding: 0.625rem 1.25rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: var(--accent-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .project-card {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .project-image {
-            height: 200px;
-            background: var(--bg-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 100%);
-        }
-
-        .project-content {
-            padding: 2.25rem;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.625rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-tag {
-            background: var(--accent-color);
-            color: white;
-            padding: 0.375rem 0.875rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1.25rem;
-        }
-
-        .project-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        .project-link:hover {
-            color: var(--accent-color);
-        }
-
-        /* Experience Section */
-        .experience-timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .experience-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--accent-color);
-            opacity: 0.3;
-        }
-
-        .experience-item {
-            position: relative;
-            background: var(--bg-primary);
-            padding: 2.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-light);
-            transition: transform 0.3s ease;
-        }
-
-        .experience-item:hover {
-            transform: translateX(4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .experience-item::before {
-            content: '';
-            position: absolute;
-            left: -2.75rem;
-            top: 2.5rem;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            box-shadow: 0 0 0 4px var(--bg-secondary);
-        }
-
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .experience-role {
-            font-size: 1.375rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .experience-company {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-
-        .experience-date {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            padding: 0.625rem 1.25rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .experience-description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        .experience-description ul {
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-        }
-
-        .experience-description li {
-            margin-bottom: 0.625rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            background: var(--text-primary);
-            color: white;
-        }
-
-        .contact .section-title {
-            color: white;
-        }
-
-        .contact .section-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+        
+        .text-accent1 { color: var(--accent1); }
+        .bg-accent1 { background-color: var(--accent1); }
+        .border-accent1 { border-color: var(--accent1); }
 
         .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-        }
-
-        .contact-icon {
-            width: 55px;
-            height: 55px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            color: white;
-        }
-
-        .contact-text h4 {
-            margin-bottom: 0.375rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .contact-text p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.625rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-family: inherit;
-            transition: border-color 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--text-primary);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem 0;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-link {
-            width: 55px;
-            height: 55px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
             transition: all 0.3s ease;
-            font-size: 1.2rem;
+        }
+        .contact-item:hover {
+            background-color: rgba(0, 246, 255, 0.05);
+            transform: translateX(5px);
+        }
+        .submit-btn {
+             box-shadow: 0 0 10px var(--accent1), 0 0 20px var(--accent2);
+             transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            box-shadow: 0 0 15px var(--accent1), 0 0 30px var(--accent2);
         }
 
-        .social-link:hover {
-            background: var(--accent-color);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .footer-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 2rem;
-                box-shadow: var(--shadow-lg);
-                border-top: 1px solid var(--border-light);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .experience-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .section {
-                padding: 4rem 0;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* Loading States */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        /* Focus styles for accessibility */
-        .btn:focus,
-        .nav-links a:focus,
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: 2px solid var(--accent-color);
-            outline-offset: 2px;
-        }
-
-        /* Print styles */
-        @media print {
-            .navbar,
-            .hero,
-            .contact,
-            .footer {
-                display: none;
-            }
-            
-            .section {
-                page-break-inside: avoid;
-                padding: 1rem 0;
-            }
-        }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo">Vedant Patel</a>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#home" class="text-4xl font-bold hero-gradient-text tracking-wider">VP</a>
+            <nav class="hidden md:flex items-center space-x-2 glass-ui p-2 rounded-full">
+                <a href="#home" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Home</a>
+                <a href="#about" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">About</a>
+                <a href="#skills" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Skills</a>
+                <a href="#projects" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Projects</a>
+                <a href="#experience" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Experience</a>
+                <a href="#contact" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="javascript:void(0)" onclick="downloadResume()" class="hidden md:inline-block px-6 py-3 text-sm font-semibold bg-accent1 text-gray-900 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-200 transform transition-all hover:scale-105 neon-glow">
+                    My Resume
+                </a>
+                <button id="theme-toggle" class="p-3 rounded-full glass-ui text-accent1">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden p-3 rounded-full glass-ui text-accent1">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1>Vedant Patel</h1>
-                <p class="hero-subtitle">Software Engineer & Full-Stack Developer</p>
-                <p class="hero-description">
-                    MS in Computer Science from University of Michigan-Dearborn. Specialized in building scalable web applications, machine learning systems, and cloud-native solutions. Passionate about creating innovative software that drives business value and user engagement.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i>
-                        Get In Touch
-                    </a>
-                    <a href="#" class="btn btn-secondary" onclick="downloadResume()">
-                        <i class="fas fa-download"></i>
-                        Download Resume
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="profile-card">
-                    <div class="profile-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3>Software Engineer</h3>
-                    <p>Ready to contribute technical expertise and innovative solutions to your next project</p>
-                </div>
-            </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-ui m-4 rounded-xl shadow-lg mt-4 text-primary">
+             <a href="#home" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10 rounded-t-xl">Home</a>
+             <a href="#about" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">About</a>
+             <a href="#skills" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Skills</a>
+             <a href="#projects" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Projects</a>
+             <a href="#experience" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Experience</a>
+             <a href="#contact" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Contact</a>
+             <a href="javascript:void(0)" onclick="downloadResume()" class="block text-center px-4 py-3 text-sm bg-accent1 text-gray-900 rounded-b-xl font-semibold">Download Resume</a>
         </div>
-    </section>
+    </header>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">
-                    Experienced software engineer with a strong foundation in computer science and a passion for solving complex technical challenges through innovative software solutions
-                </p>
-            </div>
-            <div class="about-content">
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <span class="stat-number">12+</span>
-                        <p class="stat-label">Technical Projects</p>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">3+</span>
-                        <p class="stat-label">Years Experience</p>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">85%</span>
-                        <p class="stat-label">ML Model Accuracy</p>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">95%+</span>
-                        <p class="stat-label">Test Coverage</p>
-                    </div>
-                </div>
-                <div class="about-text">
-                    <p>
-                        As a software engineer with a Master's in Computer Science from the University of Michigan-Dearborn, I bring a comprehensive skill set in full-stack development, machine learning, and system architecture. My experience spans building scalable applications, optimizing performance, and delivering measurable business impact.
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+            <canvas id="hero-canvas"></canvas>
+            <div class="relative z-10 container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-4 fade-in" style="animation-delay: 0.2s;">
+                        <span class="hero-gradient-text">Engineering</span> the Future of Digital Interaction
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto fade-in" style="animation-delay: 0.4s;">
+                        Vedant Patel — A Software Engineer crafting scalable and innovative solutions in web, mobile, and machine learning.
                     </p>
-                    <p>
-                        I have successfully delivered projects that achieved significant results, including a 99.8% crash-free mobile application and machine learning models with 85%+ accuracy on large datasets. My approach combines strong technical fundamentals with practical problem-solving skills.
-                    </p>
-                    <p>
-                        I am passionate about leveraging technology to create solutions that make a meaningful difference, whether through improving user experiences, optimizing system performance, or building intelligent applications that solve real-world problems.
-                    </p>
-                    
-                    <div class="education-item">
-                        <div class="education-degree">Master of Science in Computer and Information Science</div>
-                        <div class="education-school">University of Michigan, Dearborn</div>
-                        <div class="education-date">Aug 2023 - Apr 2025</div>
-                    </div>
-                    
-                    <div class="education-item">
-                        <div class="education-degree">Bachelor of Technology in Electronics and Communication</div>
-                        <div class="education-school">Charusat University, India</div>
-                        <div class="education-date">Aug 2019 - May 2023</div>
+                    <div class="fade-in" style="animation-delay: 0.6s;">
+                        <a href="#contact" class="inline-block px-8 py-4 text-lg font-semibold bg-accent1 text-gray-900 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-200 transform transition-all hover:scale-105 neon-glow">
+                            Initiate Contact
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Technical Skills</h2>
-                <p class="section-subtitle">
-                    Comprehensive technical expertise across modern frameworks, languages, and industry-standard development practices
-                </p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i>Programming Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C/C++</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">HTML/CSS</span>
+        <!-- About Me Section -->
+        <section id="about" class="py-24 reveal">
+            <div class="container mx-auto px-6">
+                 <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                    <div class="w-full max-w-sm mx-auto">
+                        <img src="C:\Users\patel\Desktop\pf\IMG_2733 (1).jpg" alt="Vedant Patel" class="rounded-lg shadow-2xl w-full h-auto object-cover glass-ui p-2">
                     </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-layer-group"></i>Frameworks & Libraries</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Spring Boot</span>
-                        <span class="skill-tag">ReactJS</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">PySpark</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i>Databases & Cloud</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">SQLite</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Firebase</span>
-                        <span class="skill-tag">Heroku</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-tools"></i>DevOps & Tools</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">CI/CD</span>
-                        <span class="skill-tag">JUnit</span>
-                        <span class="skill-tag">Selenium</span>
-                        <span class="skill-tag">Apache JMeter</span>
-                        <span class="skill-tag">REST APIs</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-mobile-alt"></i>Development Areas</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Full-Stack Development</span>
-                        <span class="skill-tag">Machine Learning</span>
-                        <span class="skill-tag">Mobile Development</span>
-                        <span class="skill-tag">IoT Systems</span>
-                        <span class="skill-tag">Microservices</span>
-                        <span class="skill-tag">Data Engineering</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-brain"></i>Core Competencies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Agile/Scrum</span>
-                        <span class="skill-tag">Design Patterns</span>
-                        <span class="skill-tag">OOP</span>
-                        <span class="skill-tag">System Design</span>
-                        <span class="skill-tag">Problem Solving</span>
-                        <span class="skill-tag">Team Collaboration</span>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-4xl md:text-5xl font-bold">About <span class="hero-gradient-text">Me</span></h2>
+                        <div class="flex justify-center md:justify-start space-x-4 mt-6 mb-4">
+                            <a href="https://github.com/veddantt" target="_blank" class="w-12 h-12 glass-ui rounded-full flex items-center justify-center hover:border-accent1 transition-colors" aria-label="GitHub Profile">
+                                <i class="fab fa-github text-2xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/vedant-patel-connect/" target="_blank" class="w-12 h-12 glass-ui rounded-full flex items-center justify-center hover:border-accent1 transition-colors" aria-label="LinkedIn Profile">
+                                <i class="fab fa-linkedin text-2xl"></i>
+                            </a>
+                        </div>
+                        <p class="mt-6 text-lg">
+                            I am a passionate and results-driven Software Engineer currently pursuing a Master of Science in Computer Science at the University of Michigan. My expertise lies in architecting and developing scalable solutions across web, mobile, and machine learning domains. I thrive on transforming complex problems into elegant, high-performance applications and am constantly exploring new technologies to push the boundaries of what's possible. My goal is to leverage my skills in a challenging environment to build impactful software that makes a difference.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">
-                    Showcase of technical projects demonstrating full-stack development, machine learning expertise, and scalable system architecture
-                </p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-plane"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Airline Delay Prediction System</h3>
-                        <p class="project-description">
-                            Built a comprehensive ML pipeline processing 539K+ flight records with 85% accuracy. Engineered end-to-end data workflows using PySpark and delivered comprehensive EDA with actionable insights.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">PySpark</span>
-                            <span class="tech-tag">Scikit-learn</span>
-                            <span class="tech-tag">Pandas</span>
-                            <span class="tech-tag">Machine Learning</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/veddantt/Airline-Delay-Prediction" class="project-link" target="_blank" rel="noopener">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="#" class="project-link" onclick="showProjectDetails('airline')">
-                                <i class="fas fa-info-circle"></i>
-                                Details
-                            </a>
-                        </div>
-                    </div>
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 reveal">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold">Technical <span class="hero-gradient-text">Proficiency</span></h2>
+                    <p class="mt-4 max-w-2xl mx-auto">A glimpse into my toolkit.</p>
                 </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-blog"></i>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
+                    <!-- Java -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-java text-5xl text-orange-400"></i>
+                        <p class="font-semibold mt-2">Java</p>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">BlogNest - Full-Stack Platform</h3>
-                        <p class="project-description">
-                            Developed a scalable Spring Boot + ReactJS blogging platform with JWT authentication, PostgreSQL backend, and comprehensive testing achieving >95% coverage. Implemented CI/CD pipeline for automated deployment.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Java</span>
-                            <span class="tech-tag">Spring Boot</span>
-                            <span class="tech-tag">ReactJS</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">JWT</span>
-                            <span class="tech-tag">CI/CD</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Amit-saha09/blog" class="project-link" target="_blank" rel="noopener">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="#" class="project-link" onclick="showProjectDetails('blognest')">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                        </div>
+                    <!-- Python -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-python text-5xl text-yellow-400"></i>
+                        <p class="font-semibold mt-2">Python</p>
                     </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-shield-alt"></i>
+                    <!-- JavaScript -->
+                     <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-js-square text-5xl text-yellow-300"></i>
+                        <p class="font-semibold mt-2">JavaScript</p>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">SMS Spam Detection System</h3>
-                        <p class="project-description">
-                            High-accuracy spam detection using ensemble machine learning methods achieving 98.21% accuracy and 92.96% F1-score. Built intuitive GUI for real-time predictions with advanced text preprocessing pipeline.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Scikit-learn</span>
-                            <span class="tech-tag">NLTK</span>
-                            <span class="tech-tag">Tkinter</span>
-                            <span class="tech-tag">Ensemble Learning</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link" onclick="showProjectDetails('sms')">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="#" class="project-link" onclick="showProjectDetails('sms')">
-                                <i class="fas fa-info-circle"></i>
-                                Details
-                            </a>
-                        </div>
+                    <!-- React -->
+                     <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-react text-5xl text-cyan-400"></i>
+                        <p class="font-semibold mt-2">React</p>
                     </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-shopping-cart"></i>
+                    <!-- Spring Boot -->
+                     <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fas fa-leaf text-5xl text-green-500"></i>
+                        <p class="font-semibold mt-2">Spring Boot</p>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">E-commerce Web Application</h3>
-                        <p class="project-description">
-                            Secure full-stack e-commerce platform built with Django featuring session-based authentication, responsive UI, comprehensive admin dashboard, and extensive testing suite ensuring reliability.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Django</span>
-                            <span class="tech-tag">SQLite</span>
-                            <span class="tech-tag">HTML/CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link" onclick="showProjectDetails('ecommerce')">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="#" class="project-link" onclick="showProjectDetails('ecommerce')">
-                                <i class="fas fa-info-circle"></i>
-                                Details
-                            </a>
-                        </div>
+                    <!-- SQL -->
+                     <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fas fa-database text-5xl text-sky-500"></i>
+                        <p class="font-semibold mt-2">SQL</p>
                     </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-cloud"></i>
+                    <!-- Docker -->
+                     <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-docker text-5xl text-blue-500"></i>
+                        <p class="font-semibold mt-2">Docker</p>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">AWS IoT Monitoring System</h3>
-                        <p class="project-description">
-                            End-to-end IoT solution integrating Raspberry Pi sensors with AWS IoT Core, featuring real-time data streaming, Lambda processing, and automated alerting through Amazon SES for proactive monitoring.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">AWS IoT</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Raspberry Pi</span>
-                            <span class="tech-tag">Lambda</span>
-                            <span class="tech-tag">MQTT</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link" onclick="showProjectDetails('iot')">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="#" class="project-link" onclick="showProjectDetails('iot')">
-                                <i class="fas fa-info-circle"></i>
-                                Details
-                            </a>
-                        </div>
+                    <!-- AWS -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-aws text-5xl text-orange-500"></i>
+                        <p class="font-semibold mt-2">AWS</p>
                     </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-cogs"></i>
+                    <!-- Flutter -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fas fa-mobile-alt text-5xl text-sky-400"></i>
+                        <p class="font-semibold mt-2">Flutter</p>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Custom OS Scheduler (xv6)</h3>
-                        <p class="project-description">
-                            Developed and extensively tested LUTF (Least Used Time First) scheduler in xv6 kernel using Docker containerization and QEMU emulation. Implemented thread-safe multi-client service simulation.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">C</span>
-                            <span class="tech-tag">Docker</span>
-                            <span class="tech-tag">xv6 Kernel</span>
-                            <span class="tech-tag">QEMU</span>
-                            <span class="tech-tag">Pthreads</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link" onclick="showProjectDetails('scheduler')">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="#" class="project-link" onclick="showProjectDetails('scheduler')">
-                                <i class="fas fa-info-circle"></i>
-                                Details
-                            </a>
-                        </div>
+                    <!-- Machine Learning -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fas fa-brain text-5xl text-pink-500"></i>
+                        <p class="font-semibold mt-2">ML</p>
+                    </div>
+                    <!-- Git -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fab fa-git-alt text-5xl text-red-500"></i>
+                        <p class="font-semibold mt-2">Git</p>
+                    </div>
+                    <!-- C/C++ -->
+                    <div class="glass-ui p-6 rounded-lg flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-accent1 hover:-translate-y-2">
+                        <i class="fas fa-file-code text-5xl text-indigo-400"></i>
+                        <p class="font-semibold mt-2">C/C++</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Professional Experience</h2>
-                <p class="section-subtitle">
-                    Proven track record in software development, mobile applications, and cross-functional team collaboration delivering measurable results
-                </p>
-            </div>
-            <div class="experience-timeline">
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-role">Software Developer Intern</h3>
-                            <p class="experience-company">OpenQQuantify (Remote)</p>
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 reveal">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold">Project <span class="hero-gradient-text">Showcase</span></h2>
+                    <p class="mt-4">A portfolio of my key developments.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="project-card glass-ui rounded-lg overflow-hidden group">
+                        <div class="project-image-container overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/0a0a1a/00f6ff?text=AI+System" alt="Project 1" class="w-full h-full object-cover transition-transform duration-500">
                         </div>
-                        <span class="experience-date">Aug 2025 - Feb 2026</span>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Airline Delay Prediction</h3>
+                            <p class="mb-4 text-sm">Scalable ML pipeline using PySpark, achieving 85% prediction accuracy.</p>
+                            <a href="https://github.com/veddantt/Airline-Delay-Prediction" target="_blank" class="font-semibold text-accent1 hover:underline">Access Repository <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
                     </div>
-                    <div class="experience-description">
-                        <ul>
-                            <li>Contributing to AI/ML-powered platforms, integrating advanced analytics with healthcare and intelligence applications</li>
-                            <li>Developing and integrating OSINT tools for multi-source signal collection, analysis, and pattern recognition systems</li>
-                            <li>Supporting scalable database architecture and data pipeline optimization for efficient processing and retrieval</li>
-                            <li>Implementing AI/ML workflows in media platforms to enhance automation and generative AI capabilities</li>
-                            <li>Collaborating with cross-functional teams on technical documentation and open-source project initiatives</li>
-                        </ul>
+                     <div class="project-card glass-ui rounded-lg overflow-hidden group">
+                        <div class="project-image-container overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/0a0a1a/ff00c1?text=Web+Platform" alt="Project 2" class="w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">BlogNest Platform</h3>
+                            <p class="mb-4 text-sm">Full-stack blogging platform with Spring Boot, React, and JWT authentication.</p>
+                            <a href="https://github.com/Amit-saha09/blog" target="_blank" class="font-semibold text-accent1 hover:underline">Access Repository <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                     <div class="project-card glass-ui rounded-lg overflow-hidden group">
+                        <div class="project-image-container overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/0a0a1a/00f6ff?text=ML+Security" alt="Project 3" class="w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">SMS Spam Detector</h3>
+                            <p class="mb-4 text-sm">High-accuracy spam detection using ensemble learning methods (98.21% accuracy).</p>
+                            <a href="https://github.com/veddantt/SMS-Spam-detection" target="_blank" class="font-semibold text-accent1 hover:underline">Access Repository <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-card glass-ui rounded-lg overflow-hidden group">
+                        <div class="project-image-container overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/0a0a1a/059669?text=E-Commerce" alt="Project 4" class="w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Health & Wellness E-commerce</h3>
+                            <p class="mb-4 text-sm">A secure full-stack e-commerce platform built with Django, featuring a responsive UI.</p>
+                            <a href="https://github.com/veddantt/HealthandWellness" target="_blank" class="font-semibold text-accent1 hover:underline">Access Repository <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                     <div class="project-card glass-ui rounded-lg overflow-hidden group">
+                        <div class="project-image-container overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/0a0a1a/ff9900?text=AWS+IoT" alt="Project 5" class="w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">AWS IoT Lambda Integration</h3>
+                            <p class="mb-4 text-sm">A serverless AWS IoT solution using Lambda and SES for real-time alerting.</p>
+                            <a href="https://github.com/veddantt/aws-iot-temp-sensor" target="_blank" class="font-semibold text-accent1 hover:underline">Access Repository <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                     <div class="project-card glass-ui rounded-lg overflow-hidden group">
+                        <div class="project-image-container overflow-hidden h-56">
+                            <img src="https://placehold.co/600x400/0a0a1a/c30000?text=IoT+RPi" alt="Project 6" class="w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">IoT Temperature Monitoring</h3>
+                            <p class="mb-4 text-sm">End-to-end IoT solution using Raspberry Pi and MQTT for real-time data streaming.</p>
+                            <a href="https://github.com/veddantt/mqtt-rpi-project" target="_blank" class="font-semibold text-accent1 hover:underline">Access Repository <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-role">Mobile Application Developer</h3>
-                            <p class="experience-company">Flutter Payment Application</p>
-                        </div>
-                        <span class="experience-date">2024</span>
-                    </div>
-                    <div class="experience-description">
-                        <ul>
-                            <li>Developed Flutter-based payment application achieving 99.8% crash-free rate across Android and iOS platforms</li>
-                            <li>Delivered 20+ features and critical bug fixes within Agile sprint cycles, contributing to 15% user base growth</li>
-                            <li>Integrated Firebase for real-time data synchronization and secure authentication, reducing login errors by 25%</li>
-                            <li>Enhanced user experience through Figma-based UI/UX design improvements, achieving 30% increase in user satisfaction</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-role">Electronics Engineering Developer</h3>
-                            <p class="experience-company">Hardware Development & Testing</p>
-                        </div>
-                        <span class="experience-date">2022-2023</span>
-                    </div>
-                    <div class="experience-description">
-                        <ul>
-                            <li>Designed and validated 3 PCB layouts and 5+ circuit prototypes for wireless communication systems</li>
-                            <li>Achieved zero QA errors through rigorous testing methodologies and comprehensive validation processes</li>
-                            <li>Collaborated with senior engineering teams to troubleshoot 10+ technical challenges, improving system efficiency by 22%</li>
-                            <li>Optimized circuit designs using LTSpice simulation, reducing design iteration cycles by 40%</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+             </div>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">
-                    Ready to bring technical expertise and innovative problem-solving to your team. Let's discuss how I can contribute to your next project.
-                </p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
+        <!-- Experience Section -->
+        <section id="experience" class="py-24 reveal">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold">Career <span class="hero-gradient-text">Chronology</span></h2>
+                    <p class="mt-4">Tracing my professional growth and key milestones.</p>
+                </div>
+                <div class="relative max-w-2xl mx-auto">
+                    <div class="border-l-2 border-dashed" style="border-color: var(--border-color)">
+                        <div class="timeline-item ml-8 mb-12 relative">
+                            <p class="font-semibold text-accent1 text-sm">Aug 2025 - Present</p>
+                            <h3 class="text-2xl font-bold mt-1">Software Developer Intern</h3>
+                            <p class="text-md mb-3">OpenQQuantify (Remote)</p>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Developing OSINT tools for multi-source signal collection and pattern recognition.</li>
+                                <li>Building scalable databases and data pipelines for efficient processing.</li>
+                                <li>Implementing AI/ML workflows for media platform automation.</li>
+                            </ul>
                         </div>
-                        <div class="contact-text">
-                            <h4>Email</h4>
-                            <p>patelvedant34@gmail.com</p>
+                         <div class="timeline-item ml-8 mb-12 relative">
+                            <p class="font-semibold text-accent1 text-sm">Jan 2023 - May 2023</p>
+                            <h3 class="text-2xl font-bold mt-1">Software Intern</h3>
+                            <p class="text-md mb-3">Wiz Developers</p>
+                             <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Developed a Flutter-based payment app achieving a 99.8% crash-free rate.</li>
+                                <li>Delivered 20+ features and bug fixes in an Agile environment.</li>
+                                <li>Integrated Firebase for real-time data synchronization and secure authentication.</li>
+                            </ul>
                         </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Phone</h4>
-                            <p>(586) 883-1317</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Location</h4>
-                            <p>Michigan, United States</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Availability</h4>
-                            <p>Open to Full-Time Opportunities</p>
+                        <div class="timeline-item ml-8 relative">
+                            <p class="font-semibold text-accent1 text-sm">May 2022 - June 2022</p>
+                            <h3 class="text-2xl font-bold mt-1">Electronics Intern</h3>
+                            <p class="text-md mb-3">Vinrox Technologies LLP</p>
+                             <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>Designed and tested multiple PCB layouts for wireless communication systems.</li>
+                                <li>Achieved zero QA errors in final designs while meeting all performance targets.</li>
+                                <li>Boosted system efficiency by collaborating with senior engineers to troubleshoot issues.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                
-                <div class="contact-form">
-                    <h3 style="margin-bottom: 1.5rem;">Send a Message</h3>
-                    <div id="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 reveal">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold">Contact <span class="hero-gradient-text">Nexus</span></h2>
+                    <p class="mt-4">Have a question or want to work together? Drop me a line.</p>
+                </div>
+                <div class="glass-ui p-4 md:p-8 rounded-xl">
+                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+                        <!-- Left Column: Contact Info -->
+                        <div class="p-4">
+                            <h3 class="text-3xl font-bold mb-8">Get In Touch</h3>
+                            <div class="space-y-4">
+                                <!-- Email -->
+                                <div class="contact-item flex items-start gap-4 p-4 rounded-lg">
+                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center">
+                                        <i class="fas fa-envelope text-xl text-accent1"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Email</h4>
+                                        <p class="text-sm text-secondary">patelvedant34@gmail.com</p>
+                                    </div>
+                                </div>
+                                <!-- Phone -->
+                                <div class="contact-item flex items-start gap-4 p-4 rounded-lg">
+                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center">
+                                        <i class="fas fa-phone text-xl text-accent1"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Phone</h4>
+                                        <p class="text-sm text-secondary">(586) 883-1317</p>
+                                    </div>
+                                </div>
+                                <!-- Location -->
+                                <div class="contact-item flex items-start gap-4 p-4 rounded-lg">
+                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center">
+                                        <i class="fas fa-map-marker-alt text-xl text-accent1"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Location</h4>
+                                        <p class="text-sm text-secondary">Michigan, United States</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="your.email@company.com" required>
+                        <!-- Right Column: Form -->
+                        <div class="p-4">
+                            <h3 class="text-3xl font-bold mb-8">Send a Message</h3>
+                            <form id="contact-form">
+                                <div class="mb-4">
+                                    <input type="text" id="name" name="name" placeholder="Name" class="w-full p-3 rounded-lg bg-black/20 dark:bg-white/5 border border-transparent focus:border-accent1 focus:outline-none transition-colors" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg bg-black/20 dark:bg-white/5 border border-transparent focus:border-accent1 focus:outline-none transition-colors" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="text" id="subject" name="subject" placeholder="Subject" class="w-full p-3 rounded-lg bg-black/20 dark:bg-white/5 border border-transparent focus:border-accent1 focus:outline-none transition-colors" required>
+                                </div>
+                                <div class="mb-6">
+                                    <textarea id="message" name="message" rows="5" placeholder="Message" class="w-full p-3 rounded-lg bg-black/20 dark:bg-white/5 border border-transparent focus:border-accent1 focus:outline-none transition-colors" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn w-full py-3 font-semibold text-white hero-gradient-bg rounded-full transform transition-all hover:scale-105">
+                                    Send Message
+                                </button>
+                            </form>
+                            <div id="form-message" class="hidden mt-4 text-center p-4 rounded-lg">
+                                <!-- This will show success or error messages -->
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" placeholder="Job Opportunity / Project Discussion" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" placeholder="I'd like to discuss..." required></textarea>
-                        </div>
-                        
-                        <button type="button" class="btn btn-primary" onclick="sendMessage()" style="width: 100%;">
-                            <i class="fas fa-paper-plane"></i>
-                            Send Message
-                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/vedant-patel-connect/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/veddantt" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="mailto:patelvedant34@gmail.com" class="social-link" aria-label="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="#" class="social-link" onclick="downloadResume()" aria-label="Download Resume">
-                    <i class="fas fa-file-download"></i>
-                </a>
-            </div>
-            <p class="footer-text">
-                &copy; 2025 Vedant Patel. Designed with modern web technologies. Ready to contribute to innovative teams.
-            </p>
+    <footer class="py-8 border-t" style="border-color: var(--border-color);">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">&copy; 2025 Vedant Patel // All Rights Reserved.</p>
         </div>
     </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <script>
-        // Modern JavaScript for Professional Portfolio Website
-        // Navigation and User Interface Management
-
-        class PortfolioManager {
-            constructor() {
-                this.navLinks = document.querySelectorAll('.nav-link');
-                this.sections = document.querySelectorAll('.section');
-                this.navbar = document.getElementById('navbar');
-                this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-                this.navLinksContainer = document.getElementById('nav-links');
-                
-                this.init();
-            }
-
-            init() {
-                this.setupEventListeners();
-                this.setupIntersectionObserver();
-                this.setupSmoothScrolling();
-                this.animateOnLoad();
-            }
-
-            setupEventListeners() {
-                // Mobile menu toggle
-                this.mobileMenuToggle.addEventListener('click', () => {
-                    this.navLinksContainer.classList.toggle('active');
-                });
-
-                // Close mobile menu when clicking on a link
-                this.navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        this.navLinksContainer.classList.remove('active');
-                    });
-                });
-
-                // Navbar scroll effect
-                window.addEventListener('scroll', () => {
-                    this.handleNavbarScroll();
-                });
-
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!e.target.closest('.navbar')) {
-                        this.navLinksContainer.classList.remove('active');
-                    }
-                });
-
-                // Form validation and submission
-                this.setupFormHandling();
-            }
-
-            setupIntersectionObserver() {
-                const observerOptions = {
-                    root: null,
-                    rootMargin: '-50% 0px',
-                    threshold: 0
-                };
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const sectionId = entry.target.id;
-                            this.updateActiveNavLink(sectionId);
-                        }
-                    });
-                }, observerOptions);
-
-                this.sections.forEach(section => {
-                    observer.observe(section);
-                });
-            }
-
-            updateActiveNavLink(sectionId) {
-                this.navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            handleNavbarScroll() {
-                if (window.scrollY > 100) {
-                    this.navbar.classList.add('scrolled');
-                } else {
-                    this.navbar.classList.remove('scrolled');
-                }
-            }
-
-            setupSmoothScrolling() {
-                this.navLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href');
-                        const targetSection = document.querySelector(targetId);
-                        
-                        if (targetSection) {
-                            const offsetTop = targetSection.offsetTop - 80;
-                            window.scrollTo({
-                                top: offsetTop,
-                                behavior: 'smooth'
-                            });
-                        }
-                    });
-                });
-            }
-
-            setupFormHandling() {
-                const form = document.getElementById('contact-form');
-                const inputs = form.querySelectorAll('input, textarea');
-                
-                inputs.forEach(input => {
-                    input.addEventListener('blur', () => {
-                        this.validateField(input);
-                    });
-                    
-                    input.addEventListener('input', () => {
-                        this.clearFieldError(input);
-                    });
-                });
-            }
-
-            validateField(field) {
-                const value = field.value.trim();
-                let isValid = true;
-                
-                field.classList.remove('error');
-                
-                switch (field.type) {
-                    case 'email':
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        isValid = emailRegex.test(value);
-                        break;
-                    case 'text':
-                    case 'textarea':
-                        isValid = value.length >= 2;
-                        break;
-                }
-                
-                if (!isValid && value !== '') {
-                    field.classList.add('error');
-                    field.style.borderColor = '#ef4444';
-                } else {
-                    field.style.borderColor = '';
-                }
-                
-                return isValid;
-            }
-
-            clearFieldError(field) {
-                field.classList.remove('error');
-                field.style.borderColor = '';
-            }
-
-            animateOnLoad() {
-                const observerOptions = {
-                    root: null,
-                    rootMargin: '0px 0px -100px 0px',
-                    threshold: 0.1
-                };
-
-                const animationObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('fade-in-up');
-                            animationObserver.unobserve(entry.target);
-                        }
-                    });
-                }, observerOptions);
-
-                document.querySelectorAll('.project-card, .skill-category, .experience-item').forEach(element => {
-                    animationObserver.observe(element);
-                });
-            }
-        }
-
-        // Professional PDF Resume Generator
-        function downloadResume() {
-            try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                // Professional styling constants
-                const colors = {
-                    primary: '#1a365d',
-                    accent: '#0ea5e9',
-                    text: '#374151',
-                    light: '#6b7280'
-                };
-                
-                let yPosition = 25;
-                const margin = 20;
-                const pageWidth = doc.internal.pageSize.getWidth();
-                
-                // Header Section
-                doc.setFontSize(28);
-                doc.setTextColor(colors.primary);
-                doc.text('VEDANT PATEL', margin, yPosition);
-                
-                yPosition += 8;
-                doc.setFontSize(14);
-                doc.setTextColor(colors.accent);
-                doc.text('Software Engineer & Full-Stack Developer', margin, yPosition);
-                
-                yPosition += 10;
-                doc.setFontSize(10);
-                doc.setTextColor(colors.text);
-                doc.text('Email: patelvedant34@gmail.com | Phone: (586) 883-1317', margin, yPosition);
-                yPosition += 4;
-                doc.text('LinkedIn: linkedin.com/in/vedant-patel-connect | GitHub: github.com/veddantt', margin, yPosition);
-                yPosition += 4;
-                doc.text('Location: Michigan, United States', margin, yPosition);
-                
-                // Professional Summary
-                yPosition += 12;
-                doc.setFontSize(14);
-                doc.setTextColor(colors.primary);
-                doc.text('PROFESSIONAL SUMMARY', margin, yPosition);
-                yPosition += 6;
-                
-                doc.setFontSize(10);
-                doc.setTextColor(colors.text);
-                const summary = 'Experienced Software Engineer with MS in Computer Science from University of Michigan-Dearborn. Specialized in full-stack development, machine learning, and scalable system architecture. Proven track record of delivering high-impact solutions including ML models with 85%+ accuracy and mobile applications with 99.8% crash-free rates.';
-                const splitSummary = doc.splitTextToSize(summary, pageWidth - 2 * margin);
-                doc.text(splitSummary, margin, yPosition);
-                yPosition += splitSummary.length * 4 + 6;
-
-                // Education Section
-                doc.setFontSize(14);
-                doc.setTextColor(colors.primary);
-                doc.text('EDUCATION', margin, yPosition);
-                yPosition += 6;
-                
-                doc.setFontSize(11);
-                doc.setTextColor(colors.text);
-                doc.text('Master of Science in Computer and Information Science', margin, yPosition);
-                yPosition += 4;
-                doc.setFontSize(10);
-                doc.setTextColor(colors.light);
-                doc.text('University of Michigan, Dearborn | Aug 2023 - Apr 2025', margin, yPosition);
-                yPosition += 6;
-                
-                doc.setFontSize(11);
-                doc.setTextColor(colors.text);
-                doc.text('Bachelor of Technology in Electronics and Communication', margin, yPosition);
-                yPosition += 4;
-                doc.setFontSize(10);
-                doc.setTextColor(colors.light);
-                doc.text('Charusat University, India | Aug 2019 - May 2023', margin, yPosition);
-                yPosition += 8;
-
-                // Technical Skills Section
-                doc.setFontSize(14);
-                doc.setTextColor(colors.primary);
-                doc.text('TECHNICAL SKILLS', margin, yPosition);
-                yPosition += 6;
-                
-                const skills = [
-                    { category: 'Programming Languages:', items: 'Java, Python, C/C++, JavaScript, SQL, HTML/CSS' },
-                    { category: 'Frameworks & Libraries:', items: 'Spring Boot, ReactJS, Flask, FastAPI, Pandas, Scikit-learn, PySpark' },
-                    { category: 'Databases & Cloud:', items: 'PostgreSQL, MySQL, SQLite, AWS, Firebase, Heroku' },
-                    { category: 'DevOps & Tools:', items: 'Git, Docker, CI/CD, JUnit, Selenium, Apache JMeter, REST APIs' }
-                ];
-                
-                doc.setFontSize(10);
-                skills.forEach(skill => {
-                    doc.setTextColor(colors.text);
-                    doc.text(`• ${skill.category}`, margin, yPosition);
-                    doc.setTextColor(colors.light);
-                    const skillText = doc.splitTextToSize(skill.items, pageWidth - 2 * margin - 15);
-                    doc.text(skillText, margin + 15, yPosition);
-                    yPosition += Math.max(skillText.length * 4, 4) + 2;
-                });
-                
-                yPosition += 4;
-
-                // Professional Experience Section
-                doc.setFontSize(14);
-                doc.setTextColor(colors.primary);
-                doc.text('PROFESSIONAL EXPERIENCE', margin, yPosition);
-                yPosition += 6;
-                
-                // Experience 1
-                doc.setFontSize(11);
-                doc.setTextColor(colors.text);
-                doc.text('Software Developer Intern | OpenQQuantify (Remote)', margin, yPosition);
-                yPosition += 4;
-                doc.setFontSize(10);
-                doc.setTextColor(colors.light);
-                doc.text('Aug 2025 - Feb 2026', margin, yPosition);
-                yPosition += 4;
-                
-                const exp1 = [
-                    '• Contributing to AI/ML-powered platforms integrating advanced analytics',
-                    '• Developing OSINT tools for multi-source signal collection and analysis',
-                    '• Supporting scalable database architecture and data pipeline optimization',
-                    '• Implementing AI/ML workflows in media platforms for automation'
-                ];
-                
-                doc.setFontSize(9);
-                doc.setTextColor(colors.text);
-                exp1.forEach(item => {
-                    const itemText = doc.splitTextToSize(item, pageWidth - 2 * margin);
-                    doc.text(itemText, margin, yPosition);
-                    yPosition += itemText.length * 3.5 + 1;
-                });
-                yPosition += 3;
-
-                // Check if we need a new page
-                if (yPosition > 250) {
-                    doc.addPage();
-                    yPosition = 25;
-                }
-
-                // Experience 2
-                doc.setFontSize(11);
-                doc.setTextColor(colors.text);
-                doc.text('Mobile Application Developer | Flutter Payment Application', margin, yPosition);
-                yPosition += 4;
-                doc.setFontSize(10);
-                doc.setTextColor(colors.light);
-                doc.text('2024', margin, yPosition);
-                yPosition += 4;
-                
-                const exp2 = [
-                    '• Developed Flutter app achieving 99.8% crash-free rate across platforms',
-                    '• Delivered 20+ features contributing to 15% user base growth',
-                    '• Integrated Firebase for real-time sync, reducing login errors by 25%',
-                    '• Enhanced UX design achieving 30% increase in user satisfaction'
-                ];
-                
-                doc.setFontSize(9);
-                doc.setTextColor(colors.text);
-                exp2.forEach(item => {
-                    const itemText = doc.splitTextToSize(item, pageWidth - 2 * margin);
-                    doc.text(itemText, margin, yPosition);
-                    yPosition += itemText.length * 3.5 + 1;
-                });
-                yPosition += 6;
-
-                // Featured Projects Section
-                doc.setFontSize(14);
-                doc.setTextColor(colors.primary);
-                doc.text('FEATURED PROJECTS', margin, yPosition);
-                yPosition += 6;
-                
-                const projects = [
-                    {
-                        name: 'Airline Delay Prediction System',
-                        tech: 'Python, PySpark, Scikit-learn, Machine Learning',
-                        desc: 'Built ML pipeline processing 539K+ records with 85% accuracy'
-                    },
-                    {
-                        name: 'BlogNest - Full-Stack Platform',
-                        tech: 'Java, Spring Boot, ReactJS, PostgreSQL, CI/CD',
-                        desc: 'Scalable blogging platform with JWT authentication, >95% test coverage'
-                    },
-                    {
-                        name: 'SMS Spam Detection System',
-                        tech: 'Python, Scikit-learn, NLTK, Ensemble Learning',
-                        desc: 'High-accuracy detection with 98.21% accuracy and 92.96% F1-score'
-                    }
-                ];
-                
-                projects.forEach(project => {
-                    doc.setFontSize(10);
-                    doc.setTextColor(colors.text);
-                    doc.text(`• ${project.name}`, margin, yPosition);
-                    yPosition += 4;
-                    
-                    doc.setFontSize(9);
-                    doc.setTextColor(colors.light);
-                    doc.text(`Technologies: ${project.tech}`, margin + 5, yPosition);
-                    yPosition += 3;
-                    
-                    const descText = doc.splitTextToSize(project.desc, pageWidth - 2 * margin - 5);
-                    doc.text(descText, margin + 5, yPosition);
-                    yPosition += descText.length * 3.5 + 3;
-                });
-
-                // Achievements Section
-                yPosition += 3;
-                doc.setFontSize(14);
-                doc.setTextColor(colors.primary);
-                doc.text('KEY ACHIEVEMENTS', margin, yPosition);
-                yPosition += 6;
-                
-                const achievements = [
-                    '• 85% ML Model Accuracy on large-scale datasets',
-                    '• 99.8% Crash-free rate in mobile application development',
-                    '• >95% Test Coverage in full-stack applications',
-                    '• 15% User base growth contribution through feature delivery',
-                    '• Zero QA errors in hardware prototype development'
-                ];
-                
-                doc.setFontSize(10);
-                doc.setTextColor(colors.text);
-                achievements.forEach(achievement => {
-                    doc.text(achievement, margin, yPosition);
-                    yPosition += 4;
-                });
-
-                // Save the PDF
-                doc.save('Vedant_Patel_Resume.pdf');
-                showNotification('Professional resume downloaded as PDF!', 'success');
-                
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                showNotification('Error generating PDF. Please try again.', 'error');
-            }
-        }
-
-        function sendMessage() {
-            const form = document.getElementById('contact-form');
-            
-            // Get form values
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            // Validate form
-            if (!name || !email || !subject || !message) {
-                showNotification('Please fill in all fields.', 'error');
-                return;
-            }
-            
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showNotification('Please enter a valid email address.', 'error');
-                return;
-            }
-            
-            // Simulate form submission
-            const button = document.querySelector('#contact-form button');
-            const originalText = button.innerHTML;
-            
-            // Show loading state
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            button.disabled = true;
-            button.classList.add('loading');
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Reset button
-                button.innerHTML = originalText;
-                button.disabled = false;
-                button.classList.remove('loading');
-                
-                // Clear form
-                form.reset();
-                
-                // Show success message
-                showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-                
-                console.log('Form submitted:', { name, email, subject, message });
-            }, 2000);
-        }
-
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-                <button onclick="this.parentElement.remove()" class="notification-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: ${type === 'success' ? '#059669' : type === 'error' ? '#dc2626' : '#0ea5e9'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                max-width: 400px;
-                animation: slideInRight 0.3s ease-out;
-                font-weight: 500;
-            `;
-            
-            const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.style.cssText = `
-                background: none;
-                border: none;
-                color: white;
-                cursor: pointer;
-                padding: 0.25rem;
-                margin-left: auto;
-                opacity: 0.8;
-                transition: opacity 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.style.animation = 'slideOutRight 0.3s ease-in forwards';
-                    setTimeout(() => {
-                        if (notification.parentElement) {
-                            notification.remove();
-                        }
-                    }, 300);
-                }
-            }, 5000);
-        }
-
-        function showProjectDetails(projectKey) {
-            const projectDetails = {
-                airline: {
-                    title: 'Airline Delay Prediction System',
-                    description: 'A comprehensive machine learning project processing over 539,000 historical flight records to predict delays with 85% accuracy.',
-                    features: [
-                        'End-to-end data pipeline with PySpark for big data processing',
-                        'Advanced feature engineering and data preprocessing',
-                        'Multiple ML model comparison and hyperparameter optimization',
-                        'Comprehensive EDA with interactive data visualizations',
-                        'Real-time prediction capabilities with model deployment'
-                    ],
-                    impact: 'Demonstrates proficiency in big data technologies and ability to deliver production-ready ML solutions'
-                },
-                blognest: {
-                    title: 'BlogNest - Full-Stack Blogging Platform',
-                    description: 'A modern, scalable blogging platform built with Spring Boot backend and ReactJS frontend.',
-                    features: [
-                        'JWT-based authentication and authorization system',
-                        'Role-based access control (RBAC) for different user types',
-                        'Real-time commenting and interaction system',
-                        'Advanced search and content filtering capabilities',
-                        'Comprehensive admin dashboard for content management',
-                        'CI/CD pipeline implementation with automated deployment'
-                    ],
-                    impact: 'Showcases full-stack development expertise and modern software engineering practices'
-                },
-                sms: {
-                    title: 'SMS Spam Detection System',
-                    description: 'High-accuracy spam detection system using ensemble machine learning methods.',
-                    features: [
-                        'Custom ensemble voting algorithm for improved accuracy',
-                        'Advanced text preprocessing and feature extraction pipeline',
-                        'Interactive GUI application for real-time predictions',
-                        '98.21% accuracy with 92.96% F1-score performance metrics',
-                        'Model serialization and deployment-ready architecture'
-                    ],
-                    impact: 'Demonstrates NLP expertise and practical machine learning application development'
-                },
-                ecommerce: {
-                    title: 'E-commerce Web Application',
-                    description: 'Secure e-commerce platform built with Django featuring comprehensive user management.',
-                    features: [
-                        'Session-based authentication and security system',
-                        'Product catalog with advanced category filtering',
-                        'Shopping cart and secure checkout functionality',
-                        'Admin dashboard for inventory and order management',
-                        'Comprehensive testing suite with high coverage',
-                        'Responsive design optimized for all devices'
-                    ],
-                    impact: 'Shows ability to build complete business applications with focus on security and user experience'
-                },
-                iot: {
-                    title: 'AWS IoT Monitoring System',
-                    description: 'End-to-end IoT solution integrating hardware sensors with cloud-based processing.',
-                    features: [
-                        'Raspberry Pi sensor integration and data collection',
-                        'MQTT protocol implementation for real-time data transmission',
-                        'AWS IoT Core for scalable device management',
-                        'Lambda functions for serverless data processing',
-                        'Automated email alerting system via Amazon SES',
-                        'Comprehensive error handling and system monitoring'
-                    ],
-                    impact: 'Demonstrates IoT development, cloud computing, and distributed system integration skills'
-                },
-                scheduler: {
-                    title: 'Custom OS Scheduler Implementation',
-                    description: 'Low-level systems programming project implementing LUTF scheduler in xv6 kernel.',
-                    features: [
-                        'Custom LUTF (Least Used Time First) scheduling algorithm',
-                        'Docker containerization for consistent development environment',
-                        'QEMU emulation for kernel development and testing',
-                        'Thread synchronization using semaphores and mutexes',
-                        'Multi-client service simulation and load testing',
-                        'Performance analysis and optimization techniques'
-                    ],
-                    impact: 'Shows deep understanding of operating systems and low-level programming concepts'
-                }
-            };
-            
-            const project = projectDetails[projectKey];
-            if (!project) return;
-            
-            const modal = document.createElement('div');
-            modal.className = 'project-modal';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>${project.title}</h2>
-                        <button onclick="this.closest('.project-modal').remove()" class="modal-close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="project-modal-description">${project.description}</p>
-                        <h3>Key Features:</h3>
-                        <ul class="feature-list">
-                            ${project.features.map(feature => `<li>${feature}</li>`).join('')}
-                        </ul>
-                        <div class="project-impact">
-                            <h3>Technical Impact:</h3>
-                            <p>${project.impact}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.8);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 2rem;
-                animation: fadeIn 0.3s ease-out;
-            `;
-            
-            const modalContent = modal.querySelector('.modal-content');
-            modalContent.style.cssText = `
-                background: white;
-                border-radius: 16px;
-                max-width: 700px;
-                width: 100%;
-                max-height: 80vh;
-                overflow-y: auto;
-                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-                animation: slideUp 0.3s ease-out;
-            `;
-            
-            const modalHeader = modal.querySelector('.modal-header');
-            modalHeader.style.cssText = `
-                padding: 2rem 2rem 1rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-bottom: 1px solid #e2e8f0;
-            `;
-            
-            const modalBody = modal.querySelector('.modal-body');
-            modalBody.style.cssText = `
-                padding: 2rem;
-            `;
-            
-            const closeBtn = modal.querySelector('.modal-close');
-            closeBtn.style.cssText = `
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                cursor: pointer;
-                color: #64748b;
-                padding: 0.5rem;
-                transition: color 0.3s ease;
-            `;
-            
-            document.body.appendChild(modal);
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-            
-            document.addEventListener('keydown', function escapeHandler(e) {
-                if (e.key === 'Escape') {
-                    modal.remove();
-                    document.removeEventListener('keydown', escapeHandler);
-                }
-            });
-        }
-
-        // Enhanced CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
-            @keyframes slideUp {
-                from {
-                    transform: translateY(50px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
-            
-            .project-modal .feature-list {
-                list-style: none;
-                padding: 0;
-                margin: 1rem 0;
-            }
-            
-            .project-modal .feature-list li {
-                padding: 0.75rem 0;
-                padding-left: 2rem;
-                position: relative;
-                color: #475569;
-                line-height: 1.6;
-                font-size: 1rem;
-            }
-            
-            .project-modal .feature-list li:before {
-                content: '✓';
-                position: absolute;
-                left: 0;
-                color: #059669;
-                font-weight: bold;
-                font-size: 1.1rem;
-            }
-            
-            .project-modal .project-impact {
-                background: #f8fafc;
-                padding: 1.5rem;
-                border-radius: 12px;
-                margin-top: 1.5rem;
-                border-left: 4px solid #0ea5e9;
-            }
-            
-            .project-modal .project-impact h3 {
-                color: #1a365d;
-                margin-bottom: 0.75rem;
-                font-size: 1.2rem;
-            }
-            
-            .project-modal .project-impact p {
-                color: #475569;
-                margin: 0;
-                font-style: italic;
-                line-height: 1.6;
-            }
-            
-            .project-modal-description {
-                font-size: 1.125rem;
-                line-height: 1.7;
-                color: #475569;
-                margin-bottom: 1.5rem;
-            }
-            
-            .notification-close:hover {
-                opacity: 1 !important;
-            }
-            
-            .modal-close:hover {
-                color: #dc2626 !important;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Initialize the portfolio when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            new PortfolioManager();
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let particlesArray;
+
+            function setupCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initParticles();
+            }
+
+            const mouse = { x: null, y: null, radius: (canvas.height/100) * (canvas.width/100) };
+            window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
             
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 100);
-            
-            // Performance optimizations
-            const observerOptions = {
-                root: null,
-                rootMargin: '100px 0px',
-                threshold: 0.1
-            };
-            
-            const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('loaded');
-                        imageObserver.unobserve(entry.target);
+            class Particle {
+                constructor(x, y, directionX, directionY, size) {
+                    this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = document.body.classList.contains('light-mode') ? 'rgba(67, 56, 202, 0.2)' : 'rgba(0, 246, 255, 0.3)';
+                    ctx.fill();
+                }
+                update() {
+                    if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                    if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                    
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+                    if(distance < mouse.radius + this.size){
+                        if(mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
+                        if(mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
+                        if(mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
+                        if(mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
                     }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('.project-image').forEach(img => {
-                imageObserver.observe(img);
-            });
-            
-            document.querySelectorAll('.skill-tag').forEach(tag => {
-                tag.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px) scale(1.05)';
-                });
-                
-                tag.addEventListener('mouseleave', function() {
-                    this.style.transform = '';
-                });
-            });
-            
-            console.log(`
-🚀 Vedant Patel - Professional Software Engineer Portfolio
-📧 Contact: patelvedant34@gmail.com
-💼 LinkedIn: https://www.linkedin.com/in/vedant-patel-connect/
-🔗 GitHub: https://github.com/veddantt
-
-👨‍💻 Software Engineer with MS in Computer Science
-🌟 Ready to contribute technical expertise to innovative teams
-
-Built with: Modern JavaScript, CSS3, HTML5, jsPDF
-Features: Professional design, PDF resume generation, responsive layout
-            `);
-        });
-
-        // Analytics and performance tracking
-        function trackEvent(eventName, properties = {}) {
-            console.log(`Portfolio Event: ${eventName}`, properties);
-        }
-
-        document.addEventListener('click', (e) => {
-            const target = e.target.closest('a, button');
-            if (target) {
-                const action = target.textContent.trim();
-                const href = target.href;
-                
-                if (href && (href.includes('github.com') || href.includes('linkedin.com'))) {
-                    trackEvent('external_link_click', { 
-                        link_text: action, 
-                        destination: href 
-                    });
-                }
-                
-                if (action.includes('Download Resume')) {
-                    trackEvent('resume_download', { format: 'pdf' });
-                }
-                
-                if (action.includes('Send Message')) {
-                    trackEvent('contact_form_submit', { source: 'portfolio_contact' });
+                    this.x += this.directionX; this.y += this.directionY;
+                    this.draw();
                 }
             }
-        });
-
-        window.addEventListener('load', () => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
             
-            trackEvent('page_performance', {
-                load_time: Math.round(loadTime),
-                dom_content_loaded: Math.round(perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart)
+            function initParticles() {
+                particlesArray = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 9000;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let size = (Math.random() * 2) + 1;
+                    let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                    let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                    let directionX = (Math.random() * 0.4) - 0.2;
+                    let directionY = (Math.random() * 0.4) - 0.2;
+                    particlesArray.push(new Particle(x, y, directionX, directionY, size));
+                }
+            }
+
+            function animateParticles() {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0,0,innerWidth, innerHeight);
+                for (let i = 0; i < particlesArray.length; i++) particlesArray[i].update();
+            }
+            
+            setupCanvas();
+            animateParticles();
+            window.addEventListener('resize', setupCanvas);
+
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = themeToggle.querySelector('i');
+
+            const applyTheme = (theme) => {
+                if (theme === 'light') {
+                    body.classList.add('light-mode');
+                    themeIcon.className = 'fas fa-moon';
+                } else {
+                    body.classList.remove('light-mode');
+                    themeIcon.className = 'fas fa-sun';
+                }
+                // We need to redraw canvas particles with new color
+                initParticles();
+            };
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.classList.contains('light-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme', currentTheme);
+                applyTheme(currentTheme);
             });
+
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            document.querySelectorAll('#mobile-menu a, .nav-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            // --- Updated Contact Form Logic ---
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('form-message');
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // --- EmailJS Credentials ---
+                const serviceID = 'service_p6vm19x';
+                const templateID ='template_rl1lr3t'; 
+                const publicKey = 'bfKlZ7YVcRSoBuc-0';
+                // ---------------------------
+
+                const originalButtonText = submitButton.innerHTML;
+                submitButton.innerHTML = 'Sending...';
+                submitButton.disabled = true;
+
+                emailjs.init(publicKey);
+                
+                emailjs.sendForm(serviceID, templateID, contactForm)
+                    .then(() => {
+                        contactForm.reset();
+                        formMessage.textContent = 'Message sent successfully!';
+                        formMessage.className = 'mt-4 text-center p-4 rounded-lg bg-emerald-900 text-emerald-200';
+                        formMessage.classList.remove('hidden');
+                        setTimeout(() => { formMessage.classList.add('hidden'); }, 5000);
+                    }, (err) => {
+                        console.error('EmailJS Error:', err);
+                        formMessage.textContent = 'Failed to send message. Please try again.';
+                        formMessage.className = 'mt-4 text-center p-4 rounded-lg bg-red-900 text-red-200';
+                        formMessage.classList.remove('hidden');
+                    })
+                    .finally(() => {
+                        submitButton.innerHTML = "Send Message";
+                        submitButton.disabled = false;
+                    });
+            });
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                const handleNavScroll = () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('glass-ui');
+                    } else {
+                        navbar.classList.remove('glass-ui');
+                    }
+                };
+                window.addEventListener('scroll', handleNavScroll);
+                handleNavScroll(); // Check on initial load
+            }
+
+            // Scroll Animation Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach((el) => observer.observe(el));
         });
 
-        window.addEventListener('error', (e) => {
-            console.warn('Portfolio error:', e.error);
-        });
+        function downloadResume() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'letter');
+            const margin = 40;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            let y = margin;
+
+            // Header
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(24);
+            doc.text('VEDANT PATEL', margin, y);
+            y += 28;
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text('Software Engineer', margin, y);
+            y += 15;
+
+            // Contact Info
+            doc.setFontSize(9);
+            doc.setTextColor(100);
+            doc.text('patelvedant34@gmail.com  •  linkedin.com/in/vedant-patel-connect/  •  github.com/veddantt', margin, y);
+            y += 30;
+
+            // Summary
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.text('PROFESSIONAL SUMMARY', margin, y);
+            doc.setDrawColor(200);
+            doc.line(margin, y + 5, pageWidth - margin, y + 5);
+            y += 20;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            const summaryText = 'Passionate and results-driven Software Engineer with expertise in architecting and developing scalable solutions across web, mobile, and machine learning domains. Thrives on transforming complex problems into elegant, high-performance applications.';
+            const summaryLines = doc.splitTextToSize(summaryText, pageWidth - margin * 2);
+            doc.text(summaryLines, margin, y);
+            y += summaryLines.length * 12 + 15;
+
+            // Education
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.text('EDUCATION', margin, y);
+            doc.line(margin, y + 5, pageWidth - margin, y + 5);
+            y += 20;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            doc.text('Master of Science, Computer Science - University of Michigan (Aug 2023 - Apr 2025)', margin, y);
+            y += 15;
+            doc.text('Bachelor of Technology, Electronics and Communication - Charusat University (Aug 2019 - May 2023)', margin, y);
+            y += 25;
+
+            // Skills
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.text('TECHNICAL SKILLS', margin, y);
+            doc.line(margin, y + 5, pageWidth - margin, y + 5);
+            y += 20;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            doc.text('• Languages: Java, Python, JavaScript, C/C++, SQL', margin, y); y += 15;
+            doc.text('• Frameworks: Spring Boot, React, Flask, FastAPI, Pandas, Scikit-learn, PySpark, TensorFlow', margin, y); y += 15;
+            doc.text('• Platforms & Tools: AWS, Docker, Git, Firebase, PostgreSQL, MySQL, Flutter', margin, y);
+            y += 25;
+
+            // Experience
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.text('PROFESSIONAL EXPERIENCE', margin, y);
+            doc.line(margin, y + 5, pageWidth - margin, y + 5);
+            y += 20;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            
+            doc.setFont('helvetica', 'bold');
+            doc.text('Software Developer Intern', margin, y);
+            doc.setFont('helvetica', 'normal');
+            doc.text('OpenQQuantify (Remote)', pageWidth - margin, y, { align: 'right' }); y += 15;
+            doc.setFontSize(9); doc.setTextColor(150);
+            doc.text('Aug 2025 - Present', margin, y); y += 15;
+            doc.setFontSize(10); doc.setTextColor(0);
+            doc.text('   - Developing OSINT tools for multi-source signal collection and pattern recognition.', margin, y); y += 15;
+            doc.text('   - Implementing AI/ML workflows for media platform automation.', margin, y); y += 20;
+            
+            doc.setFont('helvetica', 'bold');
+            doc.text('Software Intern', margin, y);
+            doc.setFont('helvetica', 'normal');
+            doc.text('Wiz Developers', pageWidth - margin, y, { align: 'right' }); y += 15;
+            doc.setFontSize(9); doc.setTextColor(150);
+            doc.text('Jan 2023 - May 2023', margin, y); y += 15;
+            doc.setFontSize(10); doc.setTextColor(0);
+            doc.text('   - Developed a Flutter-based payment app achieving a 99.8% crash-free rate.', margin, y); y += 15;
+            doc.text('   - Integrated Firebase for real-time data synchronization and secure authentication.', margin, y);
+
+            doc.save('Vedant_Patel_Resume.pdf');
+        }
     </script>
 </body>
 </html>
+
