@@ -82,13 +82,6 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 0 20px var(--shadow-color);
         }
-
-        .neon-glow {
-            box-shadow: 0 0 5px var(--accent1), 0 0 10px var(--accent1), 0 0 15px var(--accent1);
-        }
-        body.light-mode .neon-glow {
-             box-shadow: 0 5px 15px rgba(67, 56, 202, 0.3);
-        }
         
         .project-card:hover .project-image-container img {
             transform: scale(1.05);
@@ -133,9 +126,10 @@
         .contact-item {
             transition: all 0.3s ease;
         }
+        /* New, more prominent hover effect */
         .contact-item:hover {
-            background-color: rgba(0, 246, 255, 0.05);
-            transform: translateX(5px);
+            box-shadow: 0 0 10px var(--accent1), 0 0 20px var(--accent1);
+            transform: translateY(-5px);
         }
         .submit-btn {
              box-shadow: 0 0 10px var(--accent1), 0 0 20px var(--accent2);
@@ -155,13 +149,58 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* New nav styles */
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 100%;
+            background: rgba(0, 246, 255, 0.1);
+            border-radius: 9999px;
+            transition: width 0.3s ease, left 0.3s ease;
+            z-index: -1;
+        }
+        .nav-link:hover::before {
+            width: 100%;
+            left: 0;
+        }
+        .nav-link:hover {
+            color: var(--accent1);
+        }
+        /* Hover effect for the "My Resume" button */
+        .neon-glow {
+             box-shadow: 0 0 5px var(--accent1), 0 0 10px var(--accent1), 0 0 15px var(--accent1);
+             transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .neon-glow:hover {
+            box-shadow: 0 0 15px var(--accent1), 0 0 30px var(--accent1), 0 0 45px var(--accent1);
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px var(--accent1), 0 0 10px var(--accent1);
+            }
+            50% {
+                box-shadow: 0 0 10px var(--accent1), 0 0 20px var(--accent1);
+            }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
 
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
 
     <!-- Header -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4">
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 glass-ui">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="#home" class="text-4xl font-bold hero-gradient-text tracking-wider">VP</a>
             <nav class="hidden md:flex items-center space-x-2 glass-ui p-2 rounded-full">
@@ -193,7 +232,7 @@
              <a href="#projects" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Projects</a>
              <a href="#experience" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Experience</a>
              <a href="#contact" class="block px-4 py-3 text-sm hover:bg-black/5 dark:hover:bg-white/10">Contact</a>
-             <a href="javascript:void(0)" onclick="downloadResume()" class="block text-center px-4 py-3 text-sm bg-accent1 text-gray-900 rounded-b-xl font-semibold">Download Resume</a>
+             <a href="Vedant_Patel_Resume.pdf" target="_blank" download="Vedant_Patel_Resume.pdf" class="block text-center px-4 py-3 text-sm bg-accent1 text-gray-900 rounded-b-xl font-semibold">Download Resume</a>
         </div>
     </header>
 
@@ -230,7 +269,7 @@
             <div class="container mx-auto px-6">
                  <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
                     <div class="w-full max-w-sm mx-auto">
-                        <img src="image.jpg"alt="Vedant Patel" class="rounded-lg shadow-2xl w-full h-auto object-cover glass-ui p-2">
+                        <img src="https://placehold.co/400x500/0a0a1a/00f6ff?text=Vedant+Patel" alt="Vedant Patel" class="rounded-lg shadow-2xl w-full h-auto object-cover glass-ui p-2">
                     </div>
                     <div class="text-center md:text-left">
                         <h2 class="text-4xl md:text-5xl font-bold">About <span class="hero-gradient-text">Me</span></h2>
@@ -462,33 +501,33 @@
                             <h3 class="text-3xl font-bold mb-8">Get In Touch</h3>
                             <div class="space-y-4">
                                 <!-- Email -->
-                                <div class="contact-item flex items-start gap-4 p-4 rounded-lg">
-                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center">
-                                        <i class="fas fa-envelope text-xl text-accent1"></i>
+                                <a href="mailto:patelvedant34@gmail.com" class="group contact-item flex items-start gap-4 p-4 rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 hover:bg-white/5 transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center transition-all duration-300 group-hover:bg-accent1/20">
+                                        <i class="fas fa-envelope text-xl text-accent1 transition-colors duration-300"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold text-lg">Email</h4>
-                                        <p class="text-sm text-secondary">patelvedant34@gmail.com</p>
+                                        <h4 class="font-bold text-lg text-primary transition-colors duration-300 group-hover:text-accent1">Email</h4>
+                                        <p class="text-sm text-secondary transition-colors duration-300 group-hover:text-primary">patelvedant34@gmail.com</p>
                                     </div>
-                                </div>
+                                </a>
                                 <!-- Phone -->
-                                <div class="contact-item flex items-start gap-4 p-4 rounded-lg">
-                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center">
-                                        <i class="fas fa-phone text-xl text-accent1"></i>
+                                <a href="tel:+15868831317" class="group contact-item flex items-start gap-4 p-4 rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 hover:bg-white/5 transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center transition-all duration-300 group-hover:bg-accent1/20">
+                                        <i class="fas fa-phone text-xl text-accent1 transition-colors duration-300"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold text-lg">Phone</h4>
-                                        <p class="text-sm text-secondary">(586) 883-1317</p>
+                                        <h4 class="font-bold text-lg text-primary transition-colors duration-300 group-hover:text-accent1">Phone</h4>
+                                        <p class="text-sm text-secondary transition-colors duration-300 group-hover:text-primary">(586) 883-1317</p>
                                     </div>
-                                </div>
+                                </a>
                                 <!-- Location -->
-                                <div class="contact-item flex items-start gap-4 p-4 rounded-lg">
-                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center">
-                                        <i class="fas fa-map-marker-alt text-xl text-accent1"></i>
+                                <div class="group contact-item flex items-start gap-4 p-4 rounded-lg hover:shadow-lg hover:shadow-cyan-400/50 hover:bg-white/5 transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-lg bg-accent1/10 flex-shrink-0 flex items-center justify-center transition-all duration-300 group-hover:bg-accent1/20">
+                                        <i class="fas fa-map-marker-alt text-xl text-accent1 transition-colors duration-300"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold text-lg">Location</h4>
-                                        <p class="text-sm text-secondary">Michigan, United States</p>
+                                        <h4 class="font-bold text-lg text-primary transition-colors duration-300 group-hover:text-accent1">Location</h4>
+                                        <p class="text-sm text-secondary transition-colors duration-300 group-hover:text-primary">Michigan, United States</p>
                                     </div>
                                 </div>
                             </div>
