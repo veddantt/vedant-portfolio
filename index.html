@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vedant Patel // Software Engineer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -184,7 +184,6 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
-        </div>v>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden glass-ui m-4 rounded-xl shadow-lg mt-4 text-primary">
@@ -695,102 +694,14 @@
         });
 
         function downloadResume() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'pt', 'letter');
-            const margin = 40;
-            const pageWidth = doc.internal.pageSize.getWidth();
-            let y = margin;
-
-            // Header
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(24);
-            doc.text('VEDANT PATEL', margin, y);
-            y += 28;
-
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(12);
-            doc.text('Software Engineer', margin, y);
-            y += 15;
-
-            // Contact Info
-            doc.setFontSize(9);
-            doc.setTextColor(100);
-            doc.text('patelvedant34@gmail.com  •  linkedin.com/in/vedant-patel-connect/  •  github.com/veddantt', margin, y);
-            y += 30;
-
-            // Summary
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text('PROFESSIONAL SUMMARY', margin, y);
-            doc.setDrawColor(200);
-            doc.line(margin, y + 5, pageWidth - margin, y + 5);
-            y += 20;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(10);
-            const summaryText = 'Passionate and results-driven Software Engineer with expertise in architecting and developing scalable solutions across web, mobile, and machine learning domains. Thrives on transforming complex problems into elegant, high-performance applications.';
-            const summaryLines = doc.splitTextToSize(summaryText, pageWidth - margin * 2);
-            doc.text(summaryLines, margin, y);
-            y += summaryLines.length * 12 + 15;
-
-            // Education
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text('EDUCATION', margin, y);
-            doc.line(margin, y + 5, pageWidth - margin, y + 5);
-            y += 20;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(10);
-            doc.text('Master of Science, Computer Science - University of Michigan (Aug 2023 - Apr 2025)', margin, y);
-            y += 15;
-            doc.text('Bachelor of Technology, Electronics and Communication - Charusat University (Aug 2019 - May 2023)', margin, y);
-            y += 25;
-
-            // Skills
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text('TECHNICAL SKILLS', margin, y);
-            doc.line(margin, y + 5, pageWidth - margin, y + 5);
-            y += 20;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(10);
-            doc.text('• Languages: Java, Python, JavaScript, C/C++, SQL', margin, y); y += 15;
-            doc.text('• Frameworks: Spring Boot, React, Flask, FastAPI, Pandas, Scikit-learn, PySpark, TensorFlow', margin, y); y += 15;
-            doc.text('• Platforms & Tools: AWS, Docker, Git, Firebase, PostgreSQL, MySQL, Flutter', margin, y);
-            y += 25;
-
-            // Experience
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text('PROFESSIONAL EXPERIENCE', margin, y);
-            doc.line(margin, y + 5, pageWidth - margin, y + 5);
-            y += 20;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(10);
-            
-            doc.setFont('helvetica', 'bold');
-            doc.text('Software Developer Intern', margin, y);
-            doc.setFont('helvetica', 'normal');
-            doc.text('OpenQQuantify (Remote)', pageWidth - margin, y, { align: 'right' }); y += 15;
-            doc.setFontSize(9); doc.setTextColor(150);
-            doc.text('Aug 2025 - Present', margin, y); y += 15;
-            doc.setFontSize(10); doc.setTextColor(0);
-            doc.text('   - Developing OSINT tools for multi-source signal collection and pattern recognition.', margin, y); y += 15;
-            doc.text('   - Implementing AI/ML workflows for media platform automation.', margin, y); y += 20;
-            
-            doc.setFont('helvetica', 'bold');
-            doc.text('Software Intern', margin, y);
-            doc.setFont('helvetica', 'normal');
-            doc.text('Wiz Developers', pageWidth - margin, y, { align: 'right' }); y += 15;
-            doc.setFontSize(9); doc.setTextColor(150);
-            doc.text('Jan 2023 - May 2023', margin, y); y += 15;
-            doc.setFontSize(10); doc.setTextColor(0);
-            doc.text('   - Developed a Flutter-based payment app achieving a 99.8% crash-free rate.', margin, y); y += 15;
-            doc.text('   - Integrated Firebase for real-time data synchronization and secure authentication.', margin, y);
-
-            doc.save("C:\Users\patel\Downloads\New Resume.docx");
+            // Create a temporary anchor element
+            const link = document.createElement('a');
+            link.href = 'New Resume_1.pdf';
+            link.download = 'Vedant_Patel_Resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
 </html>
-
-
