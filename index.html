@@ -173,7 +173,8 @@
                 <a href="#contact" class="nav-link px-4 py-2 text-sm font-medium rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Contact</a>
             </nav>
             <div class="flex items-center space-x-4">
-                <a href="javascript:void(0)" onclick="downloadResume()" class="hidden md:inline-block px-6 py-3 text-sm font-semibold bg-accent1 text-gray-900 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-200 transform transition-all hover:scale-105 neon-glow">
+                <!-- Use a direct link to the PDF and set target to open in a new tab -->
+                <a href="Vedant_Patel_Resume.pdf" target="_blank" download="Vedant_Patel_Resume.pdf" class="hidden md:inline-block px-6 py-3 text-sm font-semibold bg-accent1 text-gray-900 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-200 transform transition-all hover:scale-105 neon-glow">
                     My Resume
                 </a>
                 <button id="theme-toggle" class="p-3 rounded-full glass-ui text-accent1">
@@ -183,6 +184,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
+        </div>v>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden glass-ui m-4 rounded-xl shadow-lg mt-4 text-primary">
@@ -204,12 +206,12 @@
             <div class="max-w-4xl mx-auto">
                 <!-- Headline -->
                 <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-4 fade-in" style="animation-delay: 0.2s;">
-                    <span class="hero-gradient-text">Crafting</span> Scalable, User-Focused Web & Software Experiences
+                    <span class="hero-gradient-text">Crafting</span> User-Focused Digital Experiences
                 </h1>
                 
                 <!-- Subtitle -->
                 <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto fade-in" style="animation-delay: 0.4s;">
-                    <span class="font-semibold text-accent1">Vedant Patel</span>— Passionate about frontend and full-stack development, I design solutions that transform complex challenges into seamless, impactful user experiences.
+                    <span class="text-accent1" style="font-style: italic;">I'm Vedant Patel</span> -a Software Engineer with a Master’s in Computer and Information Science from the University of Michigan - Dearborn, passionate about designing scalable, user-centered applications that make technology simple and impactful.
                 </p>
                 <!-- Call to Action -->
                 <div class="fade-in" style="animation-delay: 0.6s;">
@@ -229,7 +231,7 @@
             <div class="container mx-auto px-6">
                  <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
                     <div class="w-full max-w-sm mx-auto">
-                        <img src="image.jpg" alt="Vedant Patel" class="rounded-lg shadow-2xl w-full h-auto object-cover glass-ui p-2">
+                        <img src="C:\Users\patel\Desktop\pf\IMG_2733 (1).jpg" alt="Vedant Patel" class="rounded-lg shadow-2xl w-full h-auto object-cover glass-ui p-2">
                     </div>
                     <div class="text-center md:text-left">
                         <h2 class="text-4xl md:text-5xl font-bold">About <span class="hero-gradient-text">Me</span></h2>
@@ -241,8 +243,13 @@
                                 <i class="fab fa-linkedin text-2xl"></i>
                             </a>
                         </div>
-                        <p class="mt-6 text-lg">
-                            Hello, and welcome to my portfolio! I am a Software Engineer with a Master’s in Computer Science from the University of Michigan. My expertise lies in designing and developing scalable, user-focused applications with a strong emphasis on frontend and full-stack development. I am passionate about transforming complex challenges into efficient, elegant solutions and continuously exploring new technologies to enhance my craft.
+                       <p class="mt-6 text-lg">
+    Hello, and welcome to my portfolio! I am a Software Engineer with a Master’s in Computer Science from the University of Michigan. I enjoy designing and developing scalable, user-centered applications that bring together functionality and meaningful digital experiences.
+</p>
+
+<p class="mt-4 text-lg">
+    I am passionate about transforming complex challenges into elegant solutions that are efficient, reliable, and impactful. My approach blends creativity with problem-solving, and I am always eager to explore new ideas and refine my craft to deliver high-quality results.
+</p>
 
 <p class="mt-4 text-lg">
     Feel free to explore my projects below, and let’s connect if you’d like to collaborate or discuss how I can contribute to your team.
@@ -780,11 +787,9 @@
             doc.text('   - Developed a Flutter-based payment app achieving a 99.8% crash-free rate.', margin, y); y += 15;
             doc.text('   - Integrated Firebase for real-time data synchronization and secure authentication.', margin, y);
 
-            doc.save('Vedant_Patel_Resume.pdf');
+            doc.save("C:\Users\patel\Downloads\New Resume.docx");
         }
     </script>
 </body>
 </html>
-
-
 
